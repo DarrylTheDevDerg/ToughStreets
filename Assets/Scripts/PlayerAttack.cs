@@ -12,24 +12,37 @@ public class PlayerAttack : MonoBehaviour
     private float quickFireCooldown;
     private PlayerAnimation pA;
 
+    private CapsuleCollider atkCol;
 
     // Start is called before the first frame update
     void Awake()
     {
         pA = GetComponent<PlayerAnimation>();
+        atkCol = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
         ComboAttacks();
+
     }
 
     void ComboAttacks()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
+            pA.Punch1();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            pA.Kick1();
+        }
+    }
+
+    void AttackDetect()
+    {
+
     }
 }

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    [Header("Punch Triggers")]
+    public string triggerP1;
+    public string triggerP2;
+    public string triggerP3;
+
+    [Header("Kick Triggers")]
+    public string triggerK1;
+    public string triggerK2;
+    public string triggerK3;
+
     private Animator pAn;
 
     private void Awake()
@@ -11,33 +21,33 @@ public class PlayerAnimation : MonoBehaviour
         pAn = GetComponent<Animator>();
     }
 
-    void Punch1()
+    public void Punch1()
     {
-
+        pAn.SetTrigger(triggerP1);
     }
 
-    void Punch2()
+    public void Punch2()
     {
-
+        pAn.SetTrigger(triggerP2);
     }
 
-    void Punch3()
+    public void Punch3()
     {
-
+        pAn.SetTrigger(triggerP3);
     }
 
-    void Kick1()
+    public void Kick1()
     {
-
+        pAn.SetTrigger(triggerK1);
     }
 
-    void Kick2()
+    public void Kick2()
     {
-
+        pAn.SetTrigger(triggerK2);
     }
 
-    void Kick3()
+    public void Kick3()
     {
-
+        pAn.SetTrigger(triggerK3);
     }
 }
