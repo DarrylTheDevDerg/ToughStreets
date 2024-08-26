@@ -27,27 +27,29 @@ public class PauseScreen : MonoBehaviour
 
     }
 
-    void Pause()
+    public void Pause()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         isPaused = false;
     }
 
-    void RestartLevel()
+    public void RestartLevel()
     {
         string currentScene = SceneManager.GetActiveScene().name;
+        Time.timeScale = 1.0f;
+        isPaused = false;
         SceneManager.LoadScene(currentScene);
     }
 
-    void Exit()
+    public void Exit()
     {
         SceneManager.LoadScene(titleScreen);
     }
