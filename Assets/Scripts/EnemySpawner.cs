@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
@@ -44,7 +45,6 @@ public class EnemySpawner : MonoBehaviour
         if (currentAmt > amountPerRound[roundCount])
         {
             currentAmt = 0;
-            currentTime = 0;
             roundCount++;
         }
 
@@ -62,8 +62,12 @@ public class EnemySpawner : MonoBehaviour
         // Spawn randomAmount of enemies from the enemyPrefabs array
         for (int i = 0; i < amountPerRound[roundCount]; i++)
         {
-            int randomPrefabIndex = Random.Range(0, enemies.Length);
-            GameObject go = Instantiate(enemies[randomPrefabIndex], spawnPosition, Quaternion.identity);
+            if (currentTime > spawnCooldown)
+            {
+                int randomPrefabIndex = Random.Range(0, enemies.Length);
+                GameObject go = Instantiate(enemies[randomPrefabIndex], spawnPosition, Quaternion.identity);
+                currentTime = 0;
+            }
         }
     }
 
@@ -93,5 +97,31 @@ public class EnemySpawner : MonoBehaviour
     void Optimization()
     {
         Destroy(gameObject);
+    }
+}
+
+[CustomEditor(typeof(EnemySpawner))]
+public class DetectionZoneEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        // Draw the default Inspector
+        DrawDefaultInspector();
+
+        // Get a reference to the DetectionZone script
+        EnemySpawner detectionZone = (EnemySpawner)target;
+
+        // Check if the Collider is missing
+        Collider collider = detectionZone.GetComponent<Collider>();
+
+        if (collider == null)
+        {
+            EditorGUILayout.HelpBox("Error: No Collider component detected! This script requires a Collider to function properly.", MessageType.Error);
+
+            if (GUILayout.Button("Add CapsuleCollider"))
+            {
+                detectionZone.gameObject.AddComponent<CapsuleCollider>();
+            }
+        }
     }
 }
