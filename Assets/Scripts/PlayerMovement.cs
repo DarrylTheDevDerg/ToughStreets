@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -16,12 +14,12 @@ public class PlayerMovement : MonoBehaviour
     public float acceleration;
 
     public string animatorWalk;
-    public string animatorRun;
 
     private float dashCooldown;
     private bool grounded;
+    private bool isRunning;
 
-    private float smoothSpeedVelocity = 0f;
+    private float sprint;
 
     private Rigidbody rb;                    // Reference to the Rigidbody component
 
@@ -32,9 +30,18 @@ public class PlayerMovement : MonoBehaviour
         {
             animator = GetComponent<Animator>();  // Get the Animator component if not assigned
         }
+
+        sprint = movementSpeed * 1.5f;
     }
 
     void Update()
+    {
+        RunFunction();
+        PlayerMove();
+        AnimationManage();
+    }
+
+    void PlayerMove()
     {
         // Get input from the player
         float horizontal = Input.GetAxis("Horizontal");
@@ -51,13 +58,12 @@ public class PlayerMovement : MonoBehaviour
         // Update the Animator parameter
         float currentSpeed = animator.GetFloat(animatorWalk);
 
-        float smoothSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref smoothSpeedVelocity, 0.3f);
+        float smoothSpeed = Mathf.Lerp(currentSpeed, targetSpeed, 0.3f);
 
         animator.SetFloat(animatorWalk, smoothSpeed);
 
         if (isMoving)
         {
-
             // Calculate the target rotation based on the movement direction
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
@@ -66,18 +72,49 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             // Move the player in the direction they are facing
-            Vector3 moveDirection = transform.forward * movementSpeed * Time.deltaTime;
-            rb.MovePosition(rb.position + moveDirection);
+            if (!isRunning)
+            {
+                Vector3 moveDirection = transform.forward * movementSpeed * Time.deltaTime;
+                rb.MovePosition(rb.position + moveDirection);
+            }
+            else
+            {
+                Vector3 moveDirection = transform.forward * sprint * Time.deltaTime;
+                rb.MovePosition(rb.position + moveDirection);
+            }
         }
 
-        if (animator.GetFloat(animatorWalk) > 1f)
+        if (smoothSpeed < 0.5)
+        {
+            smoothSpeed = 0;
+        }
+    }
+
+    void RunFunction()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isRunning = true;
+        }
+        else
+        {
+            isRunning = false;
+        }
+    }
+
+    void AnimationManage()
+    {
+        if (animator.GetFloat(animatorWalk) > 1f && !isRunning)
         {
             animator.SetFloat(animatorWalk, 1f);
         }
-        else if (animator.GetFloat(animatorWalk) < 0f)
+        else if (animator.GetFloat(animatorWalk) > 2f && isRunning)
+        {
+            animator.SetFloat(animatorWalk, 2f);
+        }
+        else if (animator.GetFloat(animatorWalk) < 0f && !isRunning)
         {
             animator.SetFloat(animatorWalk, 0f);
         }
-
     }
 }

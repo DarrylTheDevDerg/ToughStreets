@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
     private EnemyCount eC;
     private int roundCount;
     private int currentAmt;
+    private int spawnAmt;
 
     private float currentTime = 0;
 
@@ -27,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         currentAmt = eC.enemiesDefeated;
+        currentTime += Time.deltaTime;
 
         // Check if there are more rounds to spawn enemies
         if (roundCount < rounds)
@@ -34,11 +36,10 @@ public class EnemySpawner : MonoBehaviour
             currentTime += Time.deltaTime;
 
             // Check if it's time to spawn enemies
-            if (currentTime > spawnCooldown)
+            if (currentTime > spawnCooldown && spawnAmt < amountPerRound[roundCount])
             {
                 // Spawn enemies
                 SpawnEnemies();
-
             }
         }
 
@@ -66,6 +67,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 int randomPrefabIndex = Random.Range(0, enemies.Length);
                 GameObject go = Instantiate(enemies[randomPrefabIndex], spawnPosition, Quaternion.identity);
+                spawnAmt++;
                 currentTime = 0;
             }
         }
@@ -101,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
 }
 
 [CustomEditor(typeof(EnemySpawner))]
+[CanEditMultipleObjects]
 public class DetectionZoneEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -118,9 +121,9 @@ public class DetectionZoneEditor : Editor
         {
             EditorGUILayout.HelpBox("Error: No Collider component detected! This script requires a Collider to function properly.", MessageType.Error);
 
-            if (GUILayout.Button("Add CapsuleCollider"))
+            if (GUILayout.Button("Add BoxCollider"))
             {
-                detectionZone.gameObject.AddComponent<CapsuleCollider>();
+                detectionZone.gameObject.AddComponent<BoxCollider>();
             }
         }
     }

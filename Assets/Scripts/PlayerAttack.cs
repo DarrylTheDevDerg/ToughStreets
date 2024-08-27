@@ -4,41 +4,73 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float quickFireWindow;
+    public float comboDelay;
     
     public float damageAmount;
     public int comboAmount;
 
-    private float quickFireCooldown;
-    private PlayerAnimation pA;
+    private Animator animator;
 
-    private CapsuleCollider atkCol;
+    private Collider atkCol;
+
+    private float lastAttackTime; // Tiempo del último ataque
+    private int comboStep;        // Paso actual del combo
 
     // Start is called before the first frame update
     void Awake()
     {
-        pA = GetComponent<PlayerAnimation>();
-        atkCol = GetComponent<CapsuleCollider>();
+        animator = GetComponent<Animator>();
+        atkCol = GetComponent<Collider>();
+        comboStep = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ComboAttacks();
-
-    }
-
-    void ComboAttacks()
-    {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            pA.Punch1();
+            HandleCombo();
+        }
+    }
+
+    private void HandleCombo()
+    {
+        float currentTime = Time.time;
+
+        // Si ha pasado suficiente tiempo desde el último ataque, reinicia el combo
+        if (currentTime - lastAttackTime > comboDelay)
+        {
+            comboStep = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        // Ejecuta el ataque correspondiente según el paso del combo
+        switch (comboStep)
         {
-            pA.Kick1();
+            case 0:
+                // Realiza el primer ataque del combo
+                animator.SetBool("Combo1", true);
+                break;
+            case 1:
+                // Realiza el segundo ataque del combo
+                animator.SetBool("Combo2", true);
+                break;
+            case 2:
+                // Realiza el tercer ataque del combo
+                animator.SetBool("Combo3", true);
+                break;
         }
+
+        // Actualiza el paso del combo y el tiempo del último ataque
+        comboStep = (comboStep + 1) % 3; // Cambia al siguiente ataque en el combo (0, 1, 2, 0, 1, 2, ...)
+        lastAttackTime = currentTime;
+    }
+
+    private void ResetComboBools()
+    {
+        // Espera el tiempo necesario para que las animaciones se reproduzcan completamente
+        animator.SetBool("Combo1", false);
+        animator.SetBool("Combo2", false);
+        animator.SetBool("Combo3", false);
     }
 
     void AttackDetect()
