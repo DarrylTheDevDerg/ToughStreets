@@ -989,9 +989,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3b8a1910f1af14b95130c726785b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboDelay: 1
+  comboDelay: 2.5
   damageAmount: 0
   comboAmount: 0
+  enemyTag: Enemy
 --- !u!65 &7913980828548061478
 BoxCollider:
   m_ObjectHideFlags: 0

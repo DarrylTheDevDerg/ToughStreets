@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int enemyHP;
+    public float enemyHP;
     private int atkAmount;
 
     public int lowAtkAmount;
@@ -38,5 +38,20 @@ public class Enemy : MonoBehaviour
     void OnDeath()
     {
         eC.EnemyDefeat();
+    }
+
+    public void TakeDamage()
+    {
+        PlayerAttack pA = FindObjectOfType<PlayerAttack>();
+
+        enemyHP -= pA.damageAmount;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            PlayerHarm();
+        }
     }
 }

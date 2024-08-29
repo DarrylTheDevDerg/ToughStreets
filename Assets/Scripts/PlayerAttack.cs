@@ -5,14 +5,12 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public float comboDelay;
-    
     public float damageAmount;
     public int comboAmount;
+    public string enemyTag;
 
     private Animator animator;
-
     private Collider atkCol;
-
     private float lastAttackTime; // Tiempo del último ataque
     private int comboStep;        // Paso actual del combo
 
@@ -41,6 +39,7 @@ public class PlayerAttack : MonoBehaviour
         if (currentTime - lastAttackTime > comboDelay)
         {
             comboStep = 0;
+            comboAmount = 0;
         }
 
         // Ejecuta el ataque correspondiente según el paso del combo
@@ -73,8 +72,23 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("Combo3", false);
     }
 
-    void AttackDetect()
+    private void OnTriggerEnter(Collider other)
     {
+        // Check if the triggering collider is the specific one
+        if (other == atkCol)
+        {
+            // Check if the object we're colliding with has the "Enemy" tag
+            if (other.CompareTag("Enemy"))
+            {
+                // Try to get the Enemy script attached to the collided object
+                Enemy enemy = other.GetComponent<Enemy>();
 
+                if (enemy != null)
+                {
+                    // Reduce the enemy's HP
+                    enemy.TakeDamage();
+                }
+            }
+        }
     }
 }

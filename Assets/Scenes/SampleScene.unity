@@ -2482,11 +2482,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 135.20021
       objectReference: {fileID: 0}
-    - target: {fileID: 3654367161465147221, guid: eb802c76c9625da49b137b50871244d5,
-        type: 3}
-      propertyPath: comboDelay
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3729796386245298047, guid: eb802c76c9625da49b137b50871244d5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
