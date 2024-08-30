@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     void OnDeath()
     {
         eC.EnemyDefeat();
+        Destroy(gameObject);
     }
 
     public void TakeDamage()
