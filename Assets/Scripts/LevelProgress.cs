@@ -10,19 +10,7 @@ public class LevelProgress : MonoBehaviour
     public string endScreen;
     public int currentLvl;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Progression()
+    public void Progression()
     {
         string lvlName = SceneManager.GetActiveScene().name;
 
@@ -39,10 +27,21 @@ public class LevelProgress : MonoBehaviour
                 break;
 
             case "Level3":
-                currentLvl = 2;
+                currentLvl = 3;
                 SceneManager.LoadScene(endScreen);
                 break;
         }
+    }
+
+    public void NewGame()
+    {
+        currentLvl = 0;
+        SceneManager.LoadScene(levelNames[currentLvl]);
+    }
+
+    public void ContinueGame()
+    {
+        SceneManager.LoadScene(levelNames[currentLvl]);
     }
 }
 
