@@ -12,11 +12,13 @@ public class Enemy : MonoBehaviour
 
     private PlayerStats pS;
     private EnemyCount eC;
+    private EnemySpawner eS;
 
     private void Start()
     {
         pS = FindObjectOfType<PlayerStats>();
-        eC = GetComponent<EnemyCount>();
+        eC = FindObjectOfType<EnemyCount>();
+        eS = FindObjectOfType<EnemySpawner>();
 
         atkAmount = Random.Range(lowAtkAmount, highAtkAmount);   
     }
@@ -38,14 +40,13 @@ public class Enemy : MonoBehaviour
     void OnDeath()
     {
         eC.EnemyDefeat();
+        eS.currentAmt += 1;
         Destroy(gameObject);
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        PlayerAttack pA = FindObjectOfType<PlayerAttack>();
-
-        enemyHP -= pA.damageAmount;
+        enemyHP -= damage;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -18,7 +18,7 @@ public class PlayerAttack : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        atkCol = GetComponent<Collider>();
+        
         comboStep = 0;
     }
 
@@ -72,23 +72,11 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("Combo3", false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        // Check if the triggering collider is the specific one
-        if (other == atkCol)
+        if (other.transform.CompareTag(enemyTag))
         {
-            // Check if the object we're colliding with has the "Enemy" tag
-            if (other.CompareTag("Enemy"))
-            {
-                // Try to get the Enemy script attached to the collided object
-                Enemy enemy = other.GetComponent<Enemy>();
-
-                if (enemy != null)
-                {
-                    // Reduce the enemy's HP
-                    enemy.TakeDamage();
-                }
-            }
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damageAmount);
         }
     }
 }

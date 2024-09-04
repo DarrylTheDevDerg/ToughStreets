@@ -15,9 +15,10 @@ public class EnemySpawner : MonoBehaviour
 
     private EnemyCount eC;
     private int roundCount;
-    private int currentAmt;
-    private int spawnAmt;
 
+    public int currentAmt;
+
+    private int spawnAmt;
     private float currentTime = 0;
 
     private void Start()
@@ -27,7 +28,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        currentAmt = eC.enemiesDefeated;
         currentTime += Time.deltaTime;
 
         // Check if there are more rounds to spawn enemies
@@ -43,9 +43,11 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        if (currentAmt > amountPerRound[roundCount])
+        if (currentAmt >= amountPerRound[roundCount])
         {
             currentAmt = 0;
+            currentTime = 0;
+            spawnAmt = 0;
             roundCount++;
         }
 

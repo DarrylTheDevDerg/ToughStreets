@@ -20,7 +20,7 @@ public class CrateDrop : MonoBehaviour
         
     }
 
-    void DropItems()
+    public void DropItems()
     {
         int objindex = Random.Range(0, randomDrop.Length);
 

@@ -47,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        // Apply a dead zone
+        if (Mathf.Abs(horizontal) < 0.1f) horizontal = 0;
+        if (Mathf.Abs(vertical) < 0.1f) vertical = 0;
+
         // Calculate the movement direction
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
