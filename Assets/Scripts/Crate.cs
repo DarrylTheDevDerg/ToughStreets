@@ -5,24 +5,32 @@ using UnityEngine;
 public class Crate : MonoBehaviour
 {
     public float crateHP;
-
-    private PlayerAttack pA;
     private CrateDrop cD;
+
+    private Vector3 currentPos;
+    private Quaternion currentRotation;
 
     // Start is called before the first frame update
     void Start()
     {
-        pA = FindObjectOfType<PlayerAttack>();
         cD = GetComponent<CrateDrop>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentPos = transform.position;
+        currentRotation = transform.rotation;
+
         if (crateHP <= 0)
         {
-            cD.DropItems();
+            cD.DropItems(currentPos, currentRotation);
             Destroy(gameObject);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        crateHP -= damage;
     }
 }

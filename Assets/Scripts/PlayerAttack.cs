@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     public float damageAmount;
     public int comboAmount;
     public string enemyTag;
+    public string crateTag;
 
     private Animator animator;
     private Collider atkCol;
@@ -77,6 +78,11 @@ public class PlayerAttack : MonoBehaviour
         if (other.transform.CompareTag(enemyTag))
         {
             other.gameObject.GetComponent<Enemy>().TakeDamage(damageAmount);
+        }
+
+        if (other.transform.CompareTag(crateTag))
+        {
+            other.gameObject.GetComponent<Crate>().TakeDamage(damageAmount);
         }
     }
 }

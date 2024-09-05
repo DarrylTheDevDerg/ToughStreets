@@ -1654,7 +1654,7 @@ GameObject:
   - component: {fileID: 1412531039}
   m_Layer: 0
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Crate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1739,8 +1739,8 @@ Transform:
   m_GameObject: {fileID: 1412531034}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.694124, y: 0.82664514, z: 0.046695802}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.1, y: -0.41, z: -3.14}
+  m_LocalScale: {x: 0.78787, y: 0.78787, z: 0.78787}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1757,8 +1757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bddd2925643c9a54985b281a2bd5c628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomDrop: []
-  amount: 0
+  randomDrop:
+  - {fileID: 6504624084166012303, guid: a05667c2f1361434d9e68885df62a953, type: 3}
+  amount: 1
 --- !u!114 &1412531040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1771,7 +1772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f3cf8b9d05e8045a7d88c8dd3a6f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crateHP: 0
+  crateHP: 10
 --- !u!1 &1674038589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,6 +2035,7 @@ MonoBehaviour:
   advanceAmt: 0300000006000000
   rounds: 3
   spawnCooldown: 2
+  currentAmt: 0
 --- !u!4 &1995395632
 Transform:
   m_ObjectHideFlags: 0
