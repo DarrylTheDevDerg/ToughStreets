@@ -8,18 +8,6 @@ public class CrateDrop : MonoBehaviour
     public GameObject[] randomDrop;
     public int amount;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DropItems()
     {
         int objindex = Random.Range(0, randomDrop.Length);
@@ -28,14 +16,9 @@ public class CrateDrop : MonoBehaviour
         {
             for (int i = 0; i < amount; i++)
             {
-                Instantiate(randomDrop[objindex]);
+                Instantiate(randomDrop[objindex], transform.position, Quaternion.identity);
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        DropItems();
     }
 }
 
