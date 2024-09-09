@@ -19,12 +19,10 @@ public class Crate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentPos = transform.position;
-        currentRotation = transform.rotation;
 
         if (crateHP <= 0)
         {
-            cD.DropItems(currentPos, currentRotation);
+            cD.DropItems();
             Destroy(gameObject);
         }
     }

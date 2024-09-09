@@ -8,7 +8,7 @@ public class CrateDrop : MonoBehaviour
     public GameObject[] randomDrop;
     public int amount;
 
-    public void DropItems(Vector3 position, Quaternion rotation)
+    public void DropItems()
     {
         int objindex = Random.Range(0, randomDrop.Length);
 
@@ -16,7 +16,7 @@ public class CrateDrop : MonoBehaviour
         {
             for (int i = 0; i < amount; i++)
             {
-                Instantiate(randomDrop[objindex], position, rotation);
+                Instantiate(randomDrop[objindex], transform.position, Quaternion.identity);
             }
         }
     }

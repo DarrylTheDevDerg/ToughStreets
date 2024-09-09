@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7637180413203665477}
   - component: {fileID: 606003774995183724}
   - component: {fileID: 8172393505797130634}
+  - component: {fileID: 6081124513683244395}
   m_Layer: 0
   m_Name: Medkit
   m_TagString: Untagged
@@ -103,10 +104,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.9, y: 0.9, z: 0.9}
-  m_Center: {x: 0.02, y: 0.05, z: 0}
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
+  m_Center: {x: 0.01, y: 0.01, z: 0}
 --- !u!114 &8172393505797130634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +122,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpAmount: 20
   playerTag: Player
+  itemLifetime: 5
+--- !u!114 &6081124513683244395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912630438155688021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9528446400dea4aa8e214b5b60adcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventsTargeted:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 606003774995183724}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  timeThreshold: 0.125
 --- !u!1 &6504624084166012303
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 6504624084166012303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -166,8 +196,8 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ef9b9aa90e0625e4a8c4385d2037b798, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
