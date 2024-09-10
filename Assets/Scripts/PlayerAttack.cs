@@ -78,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
         if (other.transform.CompareTag(enemyTag))
         {
             other.gameObject.GetComponent<Enemy>().TakeDamage(damageAmount);
+            comboAmount++;
         }
 
         if (other.transform.CompareTag(crateTag))

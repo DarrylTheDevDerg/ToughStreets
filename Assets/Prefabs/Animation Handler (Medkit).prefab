@@ -122,8 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpAmount: 20
   playerTag: Player
-  itemLifetime: 5
-  fadeDuration: 0
+  itemLifetime: 7.85
+  fadeDuration: 1.25
 --- !u!114 &6081124513683244395
 MonoBehaviour:
   m_ObjectHideFlags: 0
