@@ -43,11 +43,11 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4912630438155688021}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 2
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   hpAmount: 20
   playerTag: Player
   itemLifetime: 5
+  fadeDuration: 0
 --- !u!114 &6081124513683244395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 409827569824506785}
   - component: {fileID: 3221135197182923625}
+  - component: {fileID: 1287087473351324815}
   m_Layer: 0
   m_Name: Animation Handler (Medkit)
   m_TagString: Untagged
@@ -177,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 6504624084166012303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -196,12 +198,25 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ef9b9aa90e0625e4a8c4385d2037b798, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
+  m_StabilizeFeet: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1287087473351324815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6504624084166012303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 654a360d0e28bf04d84cfbc5b65e7253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLevel: -0.5

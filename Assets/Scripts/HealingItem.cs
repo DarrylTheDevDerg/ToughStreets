@@ -10,6 +10,7 @@ public class HealingItem : MonoBehaviour
     public string playerTag;
 
     public float itemLifetime;
+    public float fadeDuration;
 
     private float currentTime;
 
@@ -33,7 +34,7 @@ public class HealingItem : MonoBehaviour
 
         if (currentTime > itemLifetime)
         {
-            ItemDestruction();
+            StartCoroutine(FadeOut());
         }
     }
 
@@ -42,17 +43,28 @@ public class HealingItem : MonoBehaviour
         pS.healthPoints += hpAmount;
     }
 
-    void ItemDestruction()
+    IEnumerator FadeOut()
     {
-        SpriteRenderer sR = GetComponent<SpriteRenderer>();
-        Color colorRef = sR.color;
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        Color originalColor = spriteRenderer.color;
 
-        colorRef.a -= 0.01f;
+        float elapsedTime = 0f;
 
-        if (colorRef.a <= 0f)
+        while (elapsedTime < fadeDuration)
         {
-            Destroy(gameObject);
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);  // Gradually reduce alpha
+            Color newColor = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            spriteRenderer.color = newColor;
+
+            yield return null;  // Wait until the next frame
         }
+
+        // Ensure alpha is set to 0 at the end
+        spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+
+        // Destroy the object after fade-out
+        Destroy(gameObject);
     }
 }
 
