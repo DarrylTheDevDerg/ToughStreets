@@ -994,6 +994,7 @@ MonoBehaviour:
   comboAmount: 0
   enemyTag: Enemy
   crateTag: Crate
+  hurtAnimName: Hurt
 --- !u!65 &7913980828548061478
 BoxCollider:
   m_ObjectHideFlags: 0

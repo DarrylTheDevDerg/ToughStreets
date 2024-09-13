@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float comboDelay;
-    public float damageAmount;
+    public float comboDelay, damageAmount;
     public int comboAmount;
-    public string enemyTag;
-    public string crateTag;
+    public string enemyTag, crateTag, hurtAnimName;
 
     private Animator animator;
-    private Collider atkCol;
     private float lastAttackTime; // Tiempo del último ataque
     private int comboStep;        // Paso actual del combo
 
@@ -19,7 +16,6 @@ public class PlayerAttack : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        
         comboStep = 0;
     }
 
@@ -84,6 +80,15 @@ public class PlayerAttack : MonoBehaviour
         if (other.transform.CompareTag(crateTag))
         {
             other.gameObject.GetComponent<Crate>().TakeDamage(damageAmount);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == enemyTag)
+        {
+            animator.SetTrigger(hurtAnimName);
+            comboAmount = 0;
         }
     }
 }

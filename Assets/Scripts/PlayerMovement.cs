@@ -14,9 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public float acceleration;
 
     public string animatorWalk;
-
-    private float dashCooldown;
-    private bool grounded;
     private bool isRunning;
 
     private float sprint;
