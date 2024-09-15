@@ -880,6 +880,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5366954790335396143}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5299555571751557004}
   m_SourcePrefab: {fileID: 100100000, guid: 52af04ee587b49e49899dc52e3b1cb0c, type: 3}
 --- !u!1 &8018475788655644816 stripped
 GameObject:
@@ -952,7 +956,7 @@ MonoBehaviour:
   rotationSpeed: 720
   groundTag: Ground
   animator: {fileID: 2073013793775262759}
-  acceleration: 25
+  acceleration: 1
   animatorWalk: Walk
 --- !u!136 &2146349499721082609
 CapsuleCollider:
@@ -989,8 +993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3b8a1910f1af14b95130c726785b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboDelay: 2.5
-  damageAmount: 3.5
+  comboDelay: 2.15
+  damageAmount: 4.25
   comboAmount: 0
   enemyTag: Enemy
   crateTag: Crate
@@ -1030,3 +1034,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   gameOverScreen: GameOver
+--- !u!114 &5299555571751557004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018475788655644816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f9c970006d78644974f9dec22dc000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkColor: {r: 1, g: 0.5990566, b: 0.5990566, a: 1}
+  blinkDuration: 0.25
+  blinkCount: 1

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8930914038898038887}
   - component: {fileID: 590528738206841923}
   - component: {fileID: 4522656605633681015}
+  - component: {fileID: 3405717910413020230}
   m_Layer: 0
   m_Name: Crate
   m_TagString: Crate
@@ -163,3 +164,18 @@ MonoBehaviour:
   randomDrop:
   - {fileID: 6504624084166012303, guid: a05667c2f1361434d9e68885df62a953, type: 3}
   amount: 1
+--- !u!114 &3405717910413020230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2328709391089877633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f9c970006d78644974f9dec22dc000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkDuration: 0.1
+  blinkCount: 1

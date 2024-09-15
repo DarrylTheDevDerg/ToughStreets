@@ -5,25 +5,25 @@ using TMPro;
 
 public class VariableTextModify : MonoBehaviour
 {
-    [SerializeField]
-    public MonoBehaviour scriptToReference;
-    public string voidName;
+    public string valueName;
     public TextMeshProUGUI text;
+
+    private PlayerAttack pA;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        pA = FindObjectOfType<PlayerAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        ReflectValue();
     }
 
     public void ReflectValue()
     {
-
+        text.text = pA.GetStat(valueName).ToString();
     }
 }
