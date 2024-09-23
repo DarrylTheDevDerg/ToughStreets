@@ -9,15 +9,17 @@ public class TimedEvent : MonoBehaviour
     public float timeThreshold;
 
     private float currentTime;
+    private bool done;
 
     // Update is called once per frame
     void Update()
     {
         currentTime += Time.deltaTime;
 
-        if (currentTime > timeThreshold)
+        if (currentTime > timeThreshold && !done)
         {
             EventActivation();
+            done = true;
         }
     }
 

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2207273503203362565}
   - component: {fileID: 5282039092672407961}
+  - component: {fileID: 5049229100318102277}
+  - component: {fileID: 751002750918189070}
   m_Layer: 0
   m_Name: LevelManagement
   m_TagString: Untagged
@@ -50,3 +52,53 @@ MonoBehaviour:
   - Level3
   endScreen: TheEnd
   currentLvl: 0
+--- !u!114 &5049229100318102277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2779565334783201712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d2a21081228fe45a04e513f4cda5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefsList:
+  - key: Current Level
+    value: 0
+    prefType: 0
+  - key: Game Finished
+    value: 0
+    prefType: 0
+  - key: Score
+    value: 0
+    prefType: 0
+--- !u!114 &751002750918189070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2779565334783201712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9528446400dea4aa8e214b5b60adcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventsTargeted:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5049229100318102277}
+        m_TargetAssemblyTypeName: PlayerPrefsManager, Assembly-CSharp
+        m_MethodName: LoadAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  timeThreshold: 0

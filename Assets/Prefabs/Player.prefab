@@ -951,12 +951,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f2e709bf0da5e46a5aaf521a6be636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  movementSpeed: 3.2
   dashCooldownAmount: 0
   rotationSpeed: 720
   groundTag: Ground
   animator: {fileID: 2073013793775262759}
-  acceleration: 1
+  acceleration: 1000
   animatorWalk: Walk
 --- !u!136 &2146349499721082609
 CapsuleCollider:
@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3b8a1910f1af14b95130c726785b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboDelay: 2.15
+  comboDelay: 4.15
   damageAmount: 4.25
   comboAmount: 0
   enemyTag: Enemy

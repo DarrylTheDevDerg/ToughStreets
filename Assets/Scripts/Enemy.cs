@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float enemyHP;
+    public bool isBoss;
+    public string dedTrigger;
     private int atkAmount;
 
     public int lowAtkAmount;
@@ -13,12 +15,14 @@ public class Enemy : MonoBehaviour
     private PlayerStats pS;
     private EnemyCount eC;
     private EnemySpawner eS;
+    private Animator an;
 
     private void Start()
     {
         pS = FindObjectOfType<PlayerStats>();
         eC = FindObjectOfType<EnemyCount>();
         eS = FindObjectOfType<EnemySpawner>();
+        an = FindObjectOfType<Animator>();
 
         atkAmount = Random.Range(lowAtkAmount, highAtkAmount);   
     }
@@ -41,6 +45,11 @@ public class Enemy : MonoBehaviour
     {
         eC.EnemyDefeat();
         eS.currentAmt += 1;
+        an.SetTrigger(dedTrigger);
+    }
+
+    public void Optimization()
+    {
         Destroy(gameObject);
     }
 
@@ -55,5 +64,23 @@ public class Enemy : MonoBehaviour
         {
             PlayerHarm();
         }
+    }
+
+    public int GetStat(string key)
+    {
+        if (isBoss)
+        {
+            switch (key)
+            {
+                case "enemyHP":
+                    return (int)enemyHP;
+
+                default:
+                    Debug.LogError("No value specified, defaulting to 0.");
+                    return 0;
+            }
+        }
+
+        return 0;
     }
 }

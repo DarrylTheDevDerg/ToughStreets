@@ -7,22 +7,42 @@ public class TypewriterEffect : MonoBehaviour
     public TextMeshProUGUI textMeshPro;   // Reference to the TextMeshProUGUI component
     public float typingSpeed = 0.05f;     // Time between each character being revealed
     public string[] dialogueStrings;      // Array of strings to display
+    public bool interacting;
     private int currentStringIndex = 0;   // Tracks which string we're on
 
     private bool isTyping = false;        // Are we currently typing out a string?
     private bool skipTyping = false;      // Should we skip the typing animation?
     private bool textFullyDisplayed = false; // Is the current text fully displayed?
+    private NPCAnimationManager npc;
 
     void Start()
     {
+        npc = FindObjectOfType<NPCAnimationManager>();
+
         // Start with the first string
-        StartCoroutine(TypeText(dialogueStrings[currentStringIndex]));
+        if (npc != null)
+        {
+            dialogueStrings = npc.firstMessage;
+        }
+        else if (npc == null)
+        {
+
+        }
+
     }
 
     void Update()
     {
+        if (npc != null)
+        {
+            if (npc.alreadyInteracted && !interacting)
+            {
+                dialogueStrings = npc.secondMessage;
+            }
+        }
+
         // Check for the "E" key press
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (isTyping)
             {
@@ -75,7 +95,24 @@ public class TypewriterEffect : MonoBehaviour
         else
         {
             // Optional: If all strings have been displayed, trigger an event or action here
-            Debug.Log("All strings have been displayed.");
+            textMeshPro.gameObject.SetActive(false);
+            interacting = false;
+            npc.pM.enabled = true;
         }
+    }
+
+    public void ResetStringIndex()
+    {
+        currentStringIndex = 0;
+    }
+
+    public void StartTyping()
+    {
+        textMeshPro.gameObject.SetActive(true);
+        interacting = true;
+
+        ResetStringIndex();
+        StartCoroutine(TypeText(dialogueStrings[currentStringIndex]));
+        npc.pM.enabled = false;
     }
 }

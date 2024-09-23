@@ -14,8 +14,8 @@ public class LevelProgress : MonoBehaviour
 
     private void Start()
     {
-        ppm = FindObjectOfType<PlayerPrefsManager>();
-        currentLvl = PlayerPrefs.GetInt("Current Level", 0);
+        ppm = GetComponent<PlayerPrefsManager>();
+        currentLvl = PlayerPrefs.GetInt("Current Level");
     }
 
     public void Progression()
@@ -26,23 +26,22 @@ public class LevelProgress : MonoBehaviour
         {
             case "Level1":
                 currentLvl = 1;
-                SceneManager.LoadScene(levelNames[currentLvl]);
                 PlayerPrefs.SetInt("Current Level", 1);
                 ppm.SaveAll();
+                SceneManager.LoadScene(levelNames[currentLvl]);
                 break;
 
             case "Level2":
                 currentLvl = 2;
-                SceneManager.LoadScene(levelNames[currentLvl]);
                 PlayerPrefs.SetInt("Current Level", 2);
                 ppm.SaveAll();
+                SceneManager.LoadScene(levelNames[currentLvl]);
                 break;
 
             case "Level3":
-                currentLvl = 3;
-                SceneManager.LoadScene(endScreen);
+                currentLvl = 2;
                 PlayerPrefs.SetInt("Game Finished", 1);
-                ppm.SaveAll();
+                SceneManager.LoadScene(endScreen);
                 break;
         }
     }
@@ -50,9 +49,11 @@ public class LevelProgress : MonoBehaviour
     public void NewGame()
     {
         currentLvl = 0;
-        SceneManager.LoadScene(levelNames[currentLvl]);
         PlayerPrefs.SetInt("Current Level", 0);
+        PlayerPrefs.SetInt("Game Finished", 0);
+        PlayerPrefs.SetInt("Score", 0);
         ppm.SaveAll();
+        SceneManager.LoadScene(levelNames[currentLvl]);
     }
 
     public void ContinueGame()

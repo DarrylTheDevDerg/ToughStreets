@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
     public float comboDelay, damageAmount;
     public int comboAmount;
     public string enemyTag, crateTag, hurtAnimName;
+    public TextMeshProUGUI comboText;
+    public GameObject comboUI;
 
     private Animator animator;
     private float lastAttackTime; // Tiempo del último ataque
@@ -24,7 +27,12 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (comboAmount > 1)
+        {
+            comboUI.SetActive(true);
+            comboText.text = comboAmount.ToString();
+        }
+        if (Input.GetMouseButtonDown(0))
         {
             HandleCombo();
         }
@@ -40,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
             comboStep = 0;
             comboAmount = 0;
             lastAttackTime = 0;
+            comboUI.SetActive(false);
             ResetComboBools();
         }
 

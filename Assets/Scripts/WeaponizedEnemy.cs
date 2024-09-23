@@ -7,7 +7,7 @@ public class WeaponizedEnemy : MonoBehaviour
 {
     public float enemyHP, atkAmt, moveSpeed;
     public bool isPhysical, isRanged;
-    public string playerTag;
+    public string playerTag, attackTrigger;
     public GameObject projectile;
 
     private EnemyCount eC;
@@ -24,7 +24,10 @@ public class WeaponizedEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CloseInPlayer();
+        if (currentHP < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()
@@ -44,16 +47,9 @@ public class WeaponizedEnemy : MonoBehaviour
         }
     }
 
-    public void CloseInPlayer()
+    public void PlayAttackAnim()
     {
-        if (isPhysical)
-        {
-
-        }
-        else
-        {
-            moveSpeed = moveSpeed / 2;
-        }
+        anim.SetTrigger(attackTrigger);
     }
 }
 

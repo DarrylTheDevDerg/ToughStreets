@@ -16,7 +16,7 @@ public class HealingItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == playerTag)
+        if (other.tag == playerTag && pS.healthPoints < 100)
         {
             HealPlayer();
             Destroy(gameObject);

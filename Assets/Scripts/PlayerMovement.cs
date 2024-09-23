@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
         RunFunction();
         PlayerMove();
         AnimationManage();
+
+        rb.angularVelocity = Vector3.zero;
     }
 
     void PlayerMove()
@@ -56,15 +58,25 @@ public class PlayerMovement : MonoBehaviour
 
         float targetSpeed = direction.magnitude * movementSpeed;
 
-        // Update the Animator parameter
+        // Update the Animator parameter for walking
         float currentSpeed = animator.GetFloat(animatorWalk);
-
         float smoothSpeed = Mathf.Lerp(currentSpeed, targetSpeed, 0.3f);
-
         animator.SetFloat(animatorWalk, smoothSpeed);
+
+        // Check if the current animation is "special" (e.g., attack, jump, etc.)
+        if (IsPlayingSpecialAnimation())
+        {
+            // Reset any potential unwanted rotation after special animations
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0); // Lock X and Z axis rotation
+
+            rb.angularVelocity = Vector3.zero;
+        }
 
         if (isMoving)
         {
+            // Disable root motion during movement
+            animator.applyRootMotion = false;
+
             // Calculate the target rotation based on the movement direction
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
@@ -73,23 +85,22 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             // Move the player in the direction they are facing
-            if (!isRunning)
-            {
-                Vector3 moveDirection = transform.forward * movementSpeed * Time.deltaTime;
-                rb.MovePosition(rb.position + moveDirection);
-            }
-            else
-            {
-                Vector3 moveDirection = transform.forward * sprint * Time.deltaTime;
-                rb.MovePosition(rb.position + moveDirection);
-            }
+            Vector3 moveDirection = isRunning ? transform.forward * sprint * Time.deltaTime : transform.forward * movementSpeed * Time.deltaTime;
+            rb.MovePosition(rb.position + moveDirection);
+        }
+        else
+        {
+            // Enable root motion for non-movement animations
+            animator.applyRootMotion = true;
         }
 
-        if (smoothSpeed < 0.5)
+        // Stop the character if speed drops too low
+        if (smoothSpeed < 0.5f)
         {
             smoothSpeed = 0;
         }
     }
+
 
     void RunFunction()
     {
@@ -118,4 +129,19 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat(animatorWalk, 0f);
         }
     }
+
+    bool IsPlayingSpecialAnimation()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // 0 is the base layer
+
+        // Assuming you know the name of your special animation states (e.g., "Attack", "Jump")
+        if (stateInfo.IsName("Combo1") || stateInfo.IsName("Combo2") || stateInfo.IsName("Combo3") || stateInfo.IsName("Hurt"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }
