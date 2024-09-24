@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerAttack : MonoBehaviour
 {
     public float comboDelay, damageAmount;
-    public int comboAmount;
+    public int comboAmount, iFrames, invul;
     public string enemyTag, crateTag, hurtAnimName;
     public TextMeshProUGUI comboText;
     public GameObject comboUI;
@@ -15,12 +15,16 @@ public class PlayerAttack : MonoBehaviour
     private float lastAttackTime; // Tiempo del último ataque
     private int comboStep;        // Paso actual del combo
     private BlinkOnDamage boD;
+    private bool attacking;
+    private VariableTextModify vtm;
 
     // Start is called before the first frame update
     void Awake()
     {
         animator = GetComponent<Animator>();
         boD = GetComponent<BlinkOnDamage>();
+        vtm = FindObjectOfType<VariableTextModify>();
+
         comboStep = 0;
     }
 
@@ -31,10 +35,23 @@ public class PlayerAttack : MonoBehaviour
         {
             comboUI.SetActive(true);
             comboText.text = comboAmount.ToString();
+            vtm.enabled = true;
         }
         if (Input.GetMouseButtonDown(0))
         {
             HandleCombo();
+            
+        }
+
+        if (invul > 0 && invul != 0)
+        {
+            float degrade = 0; 
+            degrade += Time.deltaTime;
+
+            if (degrade > 2)
+            {
+                invul--;
+            }
         }
     }
 
@@ -50,6 +67,8 @@ public class PlayerAttack : MonoBehaviour
             lastAttackTime = 0;
             comboUI.SetActive(false);
             ResetComboBools();
+            attacking = false;
+            vtm.enabled = false;
         }
 
         // Ejecuta el ataque correspondiente según el paso del combo
@@ -60,18 +79,21 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo1", true);
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", false);
+                attacking = true;
                 break;
             case 1:
                 // Realiza el segundo ataque del combo
                 animator.SetBool("Combo1", false);
                 animator.SetBool("Combo2", true);
                 animator.SetBool("Combo3", false);
+                attacking = true;
                 break;
             case 2:
                 // Realiza el tercer ataque del combo
                 animator.SetBool("Combo1", false);
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", true);
+                attacking = true;
                 break;
         }
 
@@ -86,21 +108,17 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("Combo1", false);
         animator.SetBool("Combo2", false);
         animator.SetBool("Combo3", false);
+        attacking = false;
+        vtm.enabled= false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag(enemyTag))
+        if (other.transform.CompareTag(enemyTag) && attacking && !other.GetComponent<FollowPlayer>().attacking)
         {
             other.gameObject.GetComponent<Enemy>().TakeDamage(damageAmount);
             other.gameObject.GetComponent<BlinkOnDamage>().TriggerBlink();
             comboAmount++;
-        }
-
-        if (other.transform.CompareTag(crateTag))
-        {
-            other.gameObject.GetComponent<Crate>().TakeDamage(damageAmount);
-            other.gameObject.GetComponent<BlinkOnDamage>().TriggerBlink();
         }
     }
 
@@ -125,5 +143,10 @@ public class PlayerAttack : MonoBehaviour
                 Debug.LogWarning("No key attached or valid key detected, ignoring value.");
                 return 0;
         }
+    }
+
+    public void SetInvFrames()
+    {
+        invul = iFrames;
     }
 }

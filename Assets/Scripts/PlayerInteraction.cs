@@ -6,7 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     public KeyCode keyCode;
     public float rayDistance, radius;
     public LayerMask rayMask;
-    public string npcTag, interactTrigger;
+    public string npcTag, interactTrigger, crateTag;
 
     private NPCAnimationManager npc;
     private Animator an;
@@ -43,6 +43,12 @@ public class PlayerInteraction : MonoBehaviour
                         InteractWith();
                         npc.InteractWithPlayer();
                     }
+                    else if (collider.CompareTag(crateTag))
+                    {
+                        InteractWith();
+                        collider.GetComponent<Crate>().crateHP = 0;
+                    }
+
                 }
             }
             else
@@ -54,7 +60,10 @@ public class PlayerInteraction : MonoBehaviour
 
     void InteractWith()
     {
-        an.SetTrigger(interactTrigger);
+        if (!npc.te.interacting)
+        {
+            an.SetTrigger(interactTrigger);
+        }
     }
 
     void OnDrawGizmos()

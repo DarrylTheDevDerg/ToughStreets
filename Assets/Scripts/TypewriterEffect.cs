@@ -98,6 +98,7 @@ public class TypewriterEffect : MonoBehaviour
             textMeshPro.gameObject.SetActive(false);
             interacting = false;
             npc.pM.enabled = true;
+            npc.an.SetBool(npc.interactTrigger, false);
         }
     }
 

@@ -855,6 +855,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: -7494830406564289638}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7983440175768846777}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
         type: 3}
@@ -884,6 +888,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5299555571751557004}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 911262843412847310}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52af04ee587b49e49899dc52e3b1cb0c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6132113442474298643}
   m_SourcePrefab: {fileID: 100100000, guid: 52af04ee587b49e49899dc52e3b1cb0c, type: 3}
 --- !u!1 &8018475788655644816 stripped
 GameObject:
@@ -891,6 +903,48 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7171473260141276609}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &-7494830406564289638
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018475788655644816}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 8950265562796933603, guid: ae32ab2c34fd9ac4abf12b6e2bc5c40f, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!54 &7983440175768846777
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -996,9 +1050,13 @@ MonoBehaviour:
   comboDelay: 4.15
   damageAmount: 4.25
   comboAmount: 0
+  iFrames: 10
+  invul: 0
   enemyTag: Enemy
   crateTag: Crate
   hurtAnimName: Hurt
+  comboText: {fileID: 0}
+  comboUI: {fileID: 0}
 --- !u!65 &7913980828548061478
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1034,6 +1092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   gameOverScreen: GameOver
+  deathAnim: Dead
 --- !u!114 &5299555571751557004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,3 +1108,39 @@ MonoBehaviour:
   blinkColor: {r: 1, g: 0.5990566, b: 0.5990566, a: 1}
   blinkDuration: 0.25
   blinkCount: 1
+--- !u!114 &911262843412847310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018475788655644816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7349b0e8229787d468bd80b043916bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyCode: 101
+  rayDistance: 1
+  radius: 1.45
+  rayMask:
+    serializedVersion: 2
+    m_Bits: 1
+  npcTag: NPC
+  interactTrigger: Interact
+  crateTag: Crate
+--- !u!114 &-6132113442474298643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018475788655644816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee4bbcef50189547a2b56068d78b657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterRenderer: {fileID: -7494830406564289638}
+  invulnerabilityDuration: 3
+  transparencyLevel: 0.7

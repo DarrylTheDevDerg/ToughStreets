@@ -5,8 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float enemyHP;
-    public bool isBoss;
-    public string dedTrigger;
+    public string dedTrigger, hurtTrigger;
     private int atkAmount;
 
     public int lowAtkAmount;
@@ -16,13 +15,16 @@ public class Enemy : MonoBehaviour
     private EnemyCount eC;
     private EnemySpawner eS;
     private Animator an;
+    private FollowPlayer fP;
 
     private void Start()
     {
         pS = FindObjectOfType<PlayerStats>();
         eC = FindObjectOfType<EnemyCount>();
         eS = FindObjectOfType<EnemySpawner>();
-        an = FindObjectOfType<Animator>();
+        fP = GetComponent<FollowPlayer>();
+
+        an = GetComponent<Animator>();
 
         atkAmount = Random.Range(lowAtkAmount, highAtkAmount);   
     }
@@ -30,22 +32,33 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyHP < 0)
-        {
-            OnDeath();
-        }
+
     }
 
-    void PlayerHarm()
+    public void PlayerHarm()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Animator pAn = player.GetComponent<Animator>();
+        PlayerAttack playerAttack = player.GetComponent<PlayerAttack>();
+
+        pAn.SetTrigger(playerAttack.hurtAnimName);
         pS.healthPoints -= atkAmount;
+        playerAttack.SetInvFrames();
     }
 
     void OnDeath()
     {
-        eC.EnemyDefeat();
-        eS.currentAmt += 1;
+        fP.enabled = false;
+        Collider collider = GetComponent<CapsuleCollider>();
+        collider.enabled = false;
+
         an.SetTrigger(dedTrigger);
+
+        if (eC != null && eS != null)
+        {
+            eC.EnemyDefeat();
+            eS.currentAmt += 1;
+        }
     }
 
     public void Optimization()
@@ -56,31 +69,23 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         enemyHP -= damage;
+        an.SetTrigger(hurtTrigger);
+
+        if (enemyHP <= 0)
+        {
+            enemyHP = 0;
+            OnDeath();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerAttack pA = player.GetComponent<PlayerAttack>();
+
+        if (collision.transform.CompareTag("Player") && pA.invul <= 0)
         {
             PlayerHarm();
         }
-    }
-
-    public int GetStat(string key)
-    {
-        if (isBoss)
-        {
-            switch (key)
-            {
-                case "enemyHP":
-                    return (int)enemyHP;
-
-                default:
-                    Debug.LogError("No value specified, defaulting to 0.");
-                    return 0;
-            }
-        }
-
-        return 0;
     }
 }

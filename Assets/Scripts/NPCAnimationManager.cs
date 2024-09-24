@@ -16,7 +16,7 @@ public class NPCAnimationManager : MonoBehaviour
     public GameObject[] items;
 
     public bool alreadyInteracted;
-    private Animator an;
+    public Animator an;
     public TypewriterEffect te;
     public PlayerMovement pM;
 
@@ -66,7 +66,7 @@ public class NPCAnimationManager : MonoBehaviour
     {
         if (!alreadyInteracted)
         {
-            an.SetTrigger(interactTrigger);
+            an.SetBool(interactTrigger, true);
             if (giveItem)
             {
                 GiveItems();
@@ -78,7 +78,8 @@ public class NPCAnimationManager : MonoBehaviour
         }
         else
         {
-            an.SetTrigger(interactTrigger);
+            an.SetBool(interactTrigger, true);
+            te.StartTyping();
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -594,6 +594,86 @@ MonoBehaviour:
   - Name: isTitle
     Value: 1
   animatorTriggers: []
+--- !u!1001 &778525984
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207273503203362565, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2779565334783201712, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+        type: 3}
+      propertyPath: m_Name
+      value: LevelManagement
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b, type: 3}
+--- !u!114 &778525985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5282039092672407961, guid: 4be3d1fdbcfe9334e9828ad373d3fc7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 778525984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d10758b7feba314cb69a52011580199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &949674978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1115,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 276972234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 778525985}
+        m_TargetAssemblyTypeName: LevelProgress, Assembly-CSharp
+        m_MethodName: ContinueGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1347837458
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1055,6 +1147,7 @@ GameObject:
   - component: {fileID: 1867355700}
   - component: {fileID: 1867355702}
   - component: {fileID: 1867355701}
+  - component: {fileID: 1867355703}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -1125,7 +1218,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 949674980}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1867355703}
+        m_TargetAssemblyTypeName: EasySceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1867355702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1134,6 +1239,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867355699}
   m_CullTransparentMesh: 1
+--- !u!114 &1867355703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867355699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a81604b09f15e4eb0c7b0510560e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: TitleScreen
 --- !u!1 &1996943949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,3 +1380,4 @@ SceneRoots:
   - {fileID: 408776443}
   - {fileID: 1996943953}
   - {fileID: 649797998}
+  - {fileID: 778525984}

@@ -26,6 +26,11 @@ public class PlayerStats : MonoBehaviour
             pM.enabled = false;
             an.SetTrigger(deathAnim);
         }
+
+        if (healthPoints > 100)
+        {
+            healthPoints = 100;
+        }
     }
 
     void EndGame()
