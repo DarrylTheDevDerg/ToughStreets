@@ -101,7 +101,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -132,7 +132,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 2
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &8979951895346856095
 MonoBehaviour:
@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41d70b33d95d2c43a2b74edd3122f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 92.3
-  bulletLifetime: 5
+  bulletSpeed: 12.85
+  bulletLifetime: 1.5

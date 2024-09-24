@@ -923,7 +923,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8950265562796933603, guid: ae32ab2c34fd9ac4abf12b6e2bc5c40f, type: 3}
+  - {fileID: 2100000, guid: d1100634c30f7324a99242aef0eb6caf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1034,7 +1034,7 @@ CapsuleCollider:
   m_Radius: 0.2
   m_Height: 1.74
   m_Direction: 1
-  m_Center: {x: 0, y: 0.82, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &3654367161465147221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,11 +1047,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3b8a1910f1af14b95130c726785b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboDelay: 4.15
+  comboDelay: 2
   damageAmount: 4.25
   comboAmount: 0
-  iFrames: 10
-  invul: 0
   enemyTag: Enemy
   crateTag: Crate
   hurtAnimName: Hurt
@@ -1121,8 +1119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyCode: 101
-  rayDistance: 1
-  radius: 1.45
+  rayDistance: 0.35
   rayMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1143,4 +1140,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: -7494830406564289638}
   invulnerabilityDuration: 3
-  transparencyLevel: 0.7
+  transparencyLevel: 0.2

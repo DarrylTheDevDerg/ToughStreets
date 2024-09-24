@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class EnemyCount : MonoBehaviour
@@ -13,6 +15,8 @@ public class EnemyCount : MonoBehaviour
         enemiesDefeated++;
     }
 }
+
+#if UNITY_EDITOR
 
 [CustomEditor(typeof(EnemyCount))]
 [CanEditMultipleObjects]
@@ -29,3 +33,5 @@ public class ECountEditor : Editor
         EditorGUILayout.HelpBox("This script only has the purpose to count enemies for other scripts that require some form of measurement.", MessageType.Info);
     }
 }
+
+#endif

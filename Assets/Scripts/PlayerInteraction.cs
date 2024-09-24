@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     public KeyCode keyCode;
-    public float rayDistance, radius;
+    public float rayDistance;
     public LayerMask rayMask;
     public string npcTag, interactTrigger, crateTag;
 
@@ -22,61 +22,79 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode) && !npc.te.interacting) // Trigger on space key press
         {
-            // Start point of the ray
-            Vector3 rayOrigin = transform.position;
-            // Direction of the ray
-            Vector3 rayDirection = transform.forward;
-
-            // Perform the raycast
-            RaycastHit hit;
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, rayDistance, rayMask))
-            {
-                Debug.Log("Ray hit: " + hit.collider.name);
-                // Perform a sphere check at the hit point
-                Collider[] hitColliders = Physics.OverlapSphere(hit.point, radius, rayMask);
-                foreach (var collider in hitColliders)
-                {
-                    Debug.Log("Collider found in sphere: " + collider.name);
-
-                    if (collider.CompareTag(npcTag))
-                    {
-                        InteractWith();
-                        npc.InteractWithPlayer();
-                    }
-                    else if (collider.CompareTag(crateTag))
-                    {
-                        InteractWith();
-                        collider.GetComponent<Crate>().crateHP = 0;
-                    }
-
-                }
-            }
-            else
-            {
-                Debug.Log("Ray did not hit any object.");
-            }
+            PerformRaycast();
         }
     }
 
     void InteractWith()
     {
+        if (an.GetFloat("Walk") > 0)
+        {
+            an.SetFloat("Walk", 0);
+        }
+
         if (!npc.te.interacting)
         {
             an.SetTrigger(interactTrigger);
         }
     }
 
-    void OnDrawGizmos()
+    private void PerformRaycast()
     {
-        // Draw the ray as a line
-        Gizmos.color = Color.red; // Color of the Gizmo
-        Vector3 origin = transform.position;
-        Vector3 direction = transform.forward * rayDistance;
+        // Define the ray origin (object's position) and direction (forward)
+        Vector3 rayOrigin = transform.position;
+        Vector3 rayDirection = transform.forward;
 
-        Gizmos.DrawLine(origin, origin + direction);
+        RaycastHit hit;
 
-        // Draw the sphere at the end of the ray
-        Gizmos.color = Color.clear; // Color for the sphere
-        Gizmos.DrawSphere(origin + direction, rayDistance);
+        // Perform the Raycast
+        if (Physics.Raycast(rayOrigin, rayDirection, out hit, rayDistance, rayMask))
+        {
+            Debug.Log("Ray hit: " + hit.collider.name);
+            InitiateInteraction(hit);
+        }
+        else
+        {
+            Debug.Log("Ray did not hit any object.");
+        }
+    }
+
+    // Draw the Raycast in the Scene view using Gizmos
+    private void OnDrawGizmos()
+    {
+        // Calculate a rainbow color based on time
+        Gizmos.color = GetRainbowColor(Time.time);
+
+        // Ray origin and direction
+        Vector3 rayOrigin = transform.position;
+        Vector3 rayDirection = transform.forward;
+
+        // Draw the ray line
+        Gizmos.DrawRay(rayOrigin, rayDirection * rayDistance);
+
+        // Optional: Draw a small sphere at the end of the ray to indicate its length
+        Gizmos.DrawWireSphere(rayOrigin + rayDirection * rayDistance, 0.1f);
+    }
+
+    // Function to generate a rainbow color based on time
+    private Color GetRainbowColor(float time)
+    {
+        // Use Mathf.PingPong to loop the hue value smoothly between 0 and 1
+        float hue = Mathf.Repeat(time * 0.1f, 1f); // Speed of hue change can be adjusted by multiplying time
+        return Color.HSVToRGB(hue, 1f, 1f); // Full saturation and brightness for vivid colors
+    }
+
+    void InitiateInteraction(RaycastHit hit)
+    {
+        if (hit.collider.CompareTag(npcTag))
+        {
+            InteractWith();
+            npc.InteractWithPlayer();
+        }
+        else if (hit.collider.CompareTag(crateTag))
+        {
+            InteractWith();
+            hit.collider.GetComponent<Crate>().crateHP = 0;
+        }
     }
 }

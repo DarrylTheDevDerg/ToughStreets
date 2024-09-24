@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class CrateSpawner : MonoBehaviour
@@ -78,6 +80,7 @@ public class CrateSpawner : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CrateSpawner))]
 [CanEditMultipleObjects]
 public class CSEditor : Editor
@@ -112,3 +115,4 @@ public class CSEditor : Editor
         EditorGUILayout.HelpBox("Please, do not use the delay options if not necessary, as it can throttle performance.", MessageType.Info);
     }
 }
+#endif

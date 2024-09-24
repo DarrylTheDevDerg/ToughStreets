@@ -24,7 +24,7 @@ public class FollowPlayer : MonoBehaviour
         an = GetComponent<Animator>();
         te = FindObjectOfType<TypewriterEffect>();
 
-        player = FindObjectOfType<PlayerMovement>().gameObject.transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
@@ -63,22 +63,11 @@ public class FollowPlayer : MonoBehaviour
             AttackPlayer();
         }
 
-
-        if (shouldStepBack)
+        if (shouldStepBack && !attacking)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-            // If the player is within the stopping distance, make the agent retreat
-            if (distanceToPlayer <= stoppingDistance)
-            {
-                RetreatFromPlayer();
-            }
-            else
-            {
-                // Move towards the player or perform normal behavior (like patrolling)
-                agent.SetDestination(player.position);
-            }
+            Cautious();
         }
+
     }
 
     public void LookAtPlayer()
@@ -103,7 +92,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.GetComponent<PlayerAttack>().invul <= 0)
+        if (other.CompareTag("Player") && !other.GetComponent<TransparencyEffect>().getInvulnerable())
         {
             Enemy en = GetComponent<Enemy>();
             en.PlayerHarm();
@@ -121,5 +110,24 @@ public class FollowPlayer : MonoBehaviour
 
         // Move the agent to the retreat position
         agent.SetDestination(retreatPosition);
+    }
+
+    public void Cautious()
+    {
+        if (shouldStepBack)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            // If the player is within the stopping distance, make the agent retreat
+            if (distanceToPlayer <= stoppingDistance)
+            {
+                RetreatFromPlayer();
+            }
+            else
+            {
+                // Move towards the player or perform normal behavior (like patrolling)
+                agent.SetDestination(player.position);
+            }
+        }
     }
 }

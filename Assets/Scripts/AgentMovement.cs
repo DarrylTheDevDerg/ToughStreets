@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,6 +38,7 @@ public class AgentMovement : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(Vector3))]
 public class Vector3XZDrawer : PropertyDrawer
 {
@@ -65,4 +68,6 @@ public class Vector3XZDrawer : PropertyDrawer
         EditorGUI.EndProperty();
     }
 }
+
+#endif
 

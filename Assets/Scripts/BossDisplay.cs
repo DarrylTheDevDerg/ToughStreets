@@ -10,6 +10,7 @@ public class BossDisplay : MonoBehaviour
     public GameObject bossUiDisplay;
 
     private Boss bossEn;
+    private Enemy en;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class BossDisplay : MonoBehaviour
         if (bossEn != null)
         {
             bossUiDisplay.SetActive(true);
+            en = bossEn.GetComponent<Enemy>();
         }
 
         if (bossHp != null && bossUiDisplay)
@@ -35,7 +37,7 @@ public class BossDisplay : MonoBehaviour
             SetHPText();
         }
         
-        if (bossHp == null)
+        if (en.enemyHP <= 0)
         {
             bossUiDisplay.SetActive(false);
         }
@@ -45,7 +47,7 @@ public class BossDisplay : MonoBehaviour
     {
         if (bossHp != null && bossUiDisplay)
         {
-            bossHp.text = bossEn.GetComponent<Enemy>().enemyHP.ToString();
+            bossHp.text = ((int)en.enemyHP).ToString();
         }
     }
 }

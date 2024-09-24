@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class NPCAnimationManager : MonoBehaviour
@@ -20,12 +19,16 @@ public class NPCAnimationManager : MonoBehaviour
     public TypewriterEffect te;
     public PlayerMovement pM;
 
+    public PlayerAttack pA;
+
     // Start is called before the first frame update
     void Start()
     {
         an = GetComponent<Animator>();
         te = FindObjectOfType<TypewriterEffect>();
         pM = FindObjectOfType<PlayerMovement>();
+
+        pA = FindObjectOfType<PlayerAttack>();
 
         an.SetLayerWeight(npcType, 1f);
 
@@ -72,14 +75,31 @@ public class NPCAnimationManager : MonoBehaviour
                 GiveItems();
             }
 
+            LookAtPlayer();
             te.StartTyping();
 
             alreadyInteracted = true;
         }
         else
         {
+            LookAtPlayer();
             an.SetBool(interactTrigger, true);
             te.StartTyping();
         }
+    }
+
+    public void LookAtPlayer()
+    {
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // Get the direction to the player
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0;  // Lock rotation to only rotate on the Y-axis (so it doesn't tilt up/down)
+
+        // Get the target rotation to face the player
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        // Smoothly rotate towards the player over time
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 }

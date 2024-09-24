@@ -7,17 +7,19 @@ public class TypewriterEffect : MonoBehaviour
     public TextMeshProUGUI textMeshPro;   // Reference to the TextMeshProUGUI component
     public float typingSpeed = 0.05f;     // Time between each character being revealed
     public string[] dialogueStrings;      // Array of strings to display
-    public bool interacting;
+    public bool interacting, inactiveAfterUse;
     private int currentStringIndex = 0;   // Tracks which string we're on
 
     private bool isTyping = false;        // Are we currently typing out a string?
     private bool skipTyping = false;      // Should we skip the typing animation?
     private bool textFullyDisplayed = false; // Is the current text fully displayed?
     private NPCAnimationManager npc;
+    private TransparencyEffect tE;
 
     void Start()
     {
         npc = FindObjectOfType<NPCAnimationManager>();
+        tE = FindObjectOfType<TransparencyEffect>();
 
         // Start with the first string
         if (npc != null)
@@ -26,7 +28,7 @@ public class TypewriterEffect : MonoBehaviour
         }
         else if (npc == null)
         {
-
+            StartTyping();
         }
 
     }
@@ -95,10 +97,18 @@ public class TypewriterEffect : MonoBehaviour
         else
         {
             // Optional: If all strings have been displayed, trigger an event or action here
-            textMeshPro.gameObject.SetActive(false);
-            interacting = false;
-            npc.pM.enabled = true;
-            npc.an.SetBool(npc.interactTrigger, false);
+            if (inactiveAfterUse)
+            {
+                textMeshPro.gameObject.SetActive(false);
+                interacting = false;
+            }
+
+            if (npc != null)
+            {
+                npc.pM.enabled = true;
+                npc.pA.enabled = true;
+                npc.an.SetBool(npc.interactTrigger, false);
+            }
         }
     }
 
@@ -114,6 +124,13 @@ public class TypewriterEffect : MonoBehaviour
 
         ResetStringIndex();
         StartCoroutine(TypeText(dialogueStrings[currentStringIndex]));
-        npc.pM.enabled = false;
+
+        if (npc != null && tE != null)
+        {
+            npc.pM.enabled = false;
+            npc.pA.enabled = false;
+
+            tE.SetInvul();
+        }
     }
 }

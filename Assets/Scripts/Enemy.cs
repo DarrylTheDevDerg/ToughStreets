@@ -16,14 +16,16 @@ public class Enemy : MonoBehaviour
     private EnemySpawner eS;
     private Animator an;
     private FollowPlayer fP;
+    private TransparencyEffect tE;
 
     private void Start()
     {
         pS = FindObjectOfType<PlayerStats>();
         eC = FindObjectOfType<EnemyCount>();
         eS = FindObjectOfType<EnemySpawner>();
-        fP = GetComponent<FollowPlayer>();
+        tE = FindObjectOfType<TransparencyEffect>();
 
+        fP = GetComponent<FollowPlayer>();
         an = GetComponent<Animator>();
 
         atkAmount = Random.Range(lowAtkAmount, highAtkAmount);   
@@ -43,7 +45,7 @@ public class Enemy : MonoBehaviour
 
         pAn.SetTrigger(playerAttack.hurtAnimName);
         pS.healthPoints -= atkAmount;
-        playerAttack.SetInvFrames();
+        tE.TriggerInvulnerability();
     }
 
     void OnDeath()
@@ -83,7 +85,7 @@ public class Enemy : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerAttack pA = player.GetComponent<PlayerAttack>();
 
-        if (collision.transform.CompareTag("Player") && pA.invul <= 0)
+        if (collision.transform.CompareTag("Player") && !tE.getInvulnerable())
         {
             PlayerHarm();
         }

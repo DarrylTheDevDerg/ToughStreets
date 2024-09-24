@@ -16,11 +16,11 @@ public class Gun : MonoBehaviour
     private void Update()
     {
         // Get direction to the player but ignore Y-axis for horizontal rotation
-        Vector3 direction = player.position - firePoint.position;
+        Vector3 direction = player.position;
         direction.y = 0;  // Lock Y-axis (no tilting up or down)
 
         // Calculate the desired rotation
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Quaternion targetRotation = Quaternion.LookRotation(direction,Vector3.up);
 
         // Smoothly rotate the gun horizontally towards the player
         firePoint.rotation = Quaternion.Slerp(transform.rotation, targetRotation, fP.rotationSpeed * Time.deltaTime);
@@ -32,7 +32,7 @@ public class Gun : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         // Optional: Force the bullet to point forward in world space, just in case
-        bullet.transform.forward = firePoint.forward;
+        //bullet.transform.forward = firePoint.forward;
     }
 }
 

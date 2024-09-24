@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class CrateDrop : MonoBehaviour
@@ -22,6 +24,7 @@ public class CrateDrop : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CrateDrop))]
 [CanEditMultipleObjects]
 public class CDEditor : Editor
@@ -50,3 +53,5 @@ public class CDEditor : Editor
         }
     }
 }
+
+#endif

@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
     private PlayerStats pS;
     private Enemy en;
+    private TransparencyEffect tE;
 
     void Start()
     {
@@ -18,41 +19,30 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // Launch the bullet forward
+        rb.velocity = Vector3.zero;
         rb.velocity = transform.forward * bulletSpeed;
 
         pS = FindObjectOfType<PlayerStats>();
         en = GetComponent<Enemy>();
+
+        tE = FindObjectOfType<TransparencyEffect>();
 
         // Destroy the bullet after 'bulletLifetime' seconds
         Destroy(gameObject, bulletLifetime);
     }
 
     // This function will handle what happens when the bullet hits something
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         PlayerAttack pA = player.GetComponent<PlayerAttack>();
 
         Enemy enemy = FindObjectOfType<Enemy>();
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !tE.getInvulnerable())
         {
-            pA.SetInvFrames();
             enemy.PlayerHarm();
             Destroy(gameObject);
         }
-
-        // Just to keep it simple, we'll destroy the bullet when it hits any object
-        
-
-        // You can also add effects or damage logic here!
-        // For example:
-        // if (collision.gameObject.CompareTag("Enemy"))
-        // {
-        //     // Apply damage to the enemy here
-        // }
-
-        // Optionally, instantiate some hit effects like sparks or explosions
-        // Instantiate(hitEffect, transform.position, Quaternion.identity);
     }
 }

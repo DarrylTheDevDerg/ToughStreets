@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,6 +35,8 @@ public class EventCollision : MonoBehaviour
     }
 }
 
+
+#if UNITY_EDITOR
 [CustomEditor(typeof(EventCollision))]
 [CanEditMultipleObjects]
 public class ECEditor : Editor
@@ -60,3 +64,5 @@ public class ECEditor : Editor
         }
     }
 }
+
+#endif

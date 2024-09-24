@@ -7,6 +7,7 @@ public class TransparencyEffect : MonoBehaviour
     public Renderer characterRenderer;
     public float invulnerabilityDuration = 3f;
     public float transparencyLevel = 0.3f;  // 0 fully transparent, 1 fully opaque
+
     private bool isInvulnerable = false;
     private Material characterMaterial;
     private Color originalColor;
@@ -15,7 +16,6 @@ public class TransparencyEffect : MonoBehaviour
     void Start()
     {
         pA = GetComponent<PlayerAttack>();
-        invulnerabilityDuration = pA.iFrames;
         characterMaterial = characterRenderer.material;
         originalColor = characterMaterial.color;
     }
@@ -43,5 +43,15 @@ public class TransparencyEffect : MonoBehaviour
         // Restore original color and opacity
         characterMaterial.color = originalColor;
         isInvulnerable = false;
+    }
+
+    public bool getInvulnerable()
+    {
+        return isInvulnerable;
+    }
+
+    public bool SetInvul()
+    {
+        return isInvulnerable = true;
     }
 }

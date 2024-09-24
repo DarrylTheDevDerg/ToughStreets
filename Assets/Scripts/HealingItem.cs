@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class HealingItem : MonoBehaviour
@@ -68,6 +70,7 @@ public class HealingItem : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(HealingItem))]
 [CanEditMultipleObjects]
 public class HIEditor : Editor
@@ -103,3 +106,4 @@ public class HIEditor : Editor
         }
     }
 }
+#endif

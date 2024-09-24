@@ -6,17 +6,18 @@ using TMPro;
 public class PlayerAttack : MonoBehaviour
 {
     public float comboDelay, damageAmount;
-    public int comboAmount, iFrames, invul;
+    public int comboAmount;
     public string enemyTag, crateTag, hurtAnimName;
     public TextMeshProUGUI comboText;
     public GameObject comboUI;
 
-    private Animator animator;
-    private float lastAttackTime; // Tiempo del último ataque
+    private Animator animator; // Tiempo del último ataque
     private int comboStep;        // Paso actual del combo
     private BlinkOnDamage boD;
     private bool attacking;
     private VariableTextModify vtm;
+    private TransparencyEffect tE;
+    private float currentTime, currentDamage, lastAttackTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -25,12 +26,17 @@ public class PlayerAttack : MonoBehaviour
         boD = GetComponent<BlinkOnDamage>();
         vtm = FindObjectOfType<VariableTextModify>();
 
+        tE = GetComponent<TransparencyEffect>();
+
+        currentDamage = damageAmount;
         comboStep = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentTime = Time.time;
+
         if (comboAmount > 1)
         {
             comboUI.SetActive(true);
@@ -40,35 +46,15 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             HandleCombo();
-            
-        }
-
-        if (invul > 0 && invul != 0)
-        {
-            float degrade = 0; 
-            degrade += Time.deltaTime;
-
-            if (degrade > 2)
-            {
-                invul--;
-            }
         }
     }
 
     private void HandleCombo()
     {
-        float currentTime = Time.time;
-
         // Si ha pasado suficiente tiempo desde el último ataque, reinicia el combo
-        if (currentTime - lastAttackTime > comboDelay)
+        if (lastAttackTime > comboDelay)
         {
-            comboStep = 0;
-            comboAmount = 0;
-            lastAttackTime = 0;
-            comboUI.SetActive(false);
-            ResetComboBools();
-            attacking = false;
-            vtm.enabled = false;
+            ComboReset();
         }
 
         // Ejecuta el ataque correspondiente según el paso del combo
@@ -80,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", false);
                 attacking = true;
+                currentDamage = damageAmount;
                 break;
             case 1:
                 // Realiza el segundo ataque del combo
@@ -87,6 +74,7 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", true);
                 animator.SetBool("Combo3", false);
                 attacking = true;
+                currentDamage = currentDamage * 1.05f;
                 break;
             case 2:
                 // Realiza el tercer ataque del combo
@@ -94,6 +82,7 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", true);
                 attacking = true;
+                currentDamage = currentDamage * 1.12f;
                 break;
         }
 
@@ -108,6 +97,7 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("Combo1", false);
         animator.SetBool("Combo2", false);
         animator.SetBool("Combo3", false);
+
         attacking = false;
         vtm.enabled= false;
     }
@@ -116,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (other.transform.CompareTag(enemyTag) && attacking && !other.GetComponent<FollowPlayer>().attacking)
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(damageAmount);
+            other.gameObject.GetComponent<Enemy>().TakeDamage(currentDamage);
             other.gameObject.GetComponent<BlinkOnDamage>().TriggerBlink();
             comboAmount++;
         }
@@ -124,7 +114,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == enemyTag)
+        if (collision.gameObject.tag == enemyTag && !tE.getInvulnerable())
         {
             animator.SetTrigger(hurtAnimName);
             boD.TriggerBlink();
@@ -145,8 +135,15 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void SetInvFrames()
+    public void ComboReset()
     {
-        invul = iFrames;
+        comboStep = 0;
+        comboAmount = 0;
+        lastAttackTime = 0;
+        comboUI.SetActive(false);
+
+        ResetComboBools();
+        attacking = false;
+        vtm.enabled = false;
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -104,6 +105,7 @@ public class EnemySpawner : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(EnemySpawner))]
 [CanEditMultipleObjects]
 public class DetectionZoneEditor : Editor
@@ -130,3 +132,4 @@ public class DetectionZoneEditor : Editor
         }
     }
 }
+#endif

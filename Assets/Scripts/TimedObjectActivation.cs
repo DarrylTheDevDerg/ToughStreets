@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class TimedObjectActivation : MonoBehaviour
@@ -45,6 +47,7 @@ public class TimedObjectActivation : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(TimedObjectActivation))]
 [CanEditMultipleObjects]
 public class TOAEditor : Editor
@@ -55,14 +58,14 @@ public class TOAEditor : Editor
         DrawDefaultInspector();
 
         // Get a reference to the DetectionZone script
-        TimedObjectActivation detectionZone = (TimedObjectActivation)target;
+        TimedObjectActivation toa = (TimedObjectActivation)target;
 
         // Check if the Collider is missing
-        float amount = detectionZone.threshold;
+        float amount = toa.threshold;
 
-        GameObject[] gO = detectionZone.objects;
+        GameObject[] gO = toa.objects;
 
-        if (gO.Length == 0)
+        if (gO == null)
         {
             EditorGUILayout.HelpBox("There must be at least one prefab object in the drop list for the script to work properly!", MessageType.Warning);
         }
@@ -73,3 +76,4 @@ public class TOAEditor : Editor
         }
     }
 }
+#endif
