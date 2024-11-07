@@ -16,7 +16,6 @@ public class BossDependentTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        main = FindObjectOfType<Boss>();
         en = FindObjectOfType<Enemy>();
         eC = GetComponent<EnemyCount>();
     }
@@ -24,7 +23,9 @@ public class BossDependentTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (en.enemyHP <= 0)
+        main = FindObjectOfType<Boss>();
+
+        if (en != null && en.enemyHP <= 0 && main != null)
         {
             if (useEC && eC.enemiesDefeated >= enemyCountNeeded)
                 foreach (GameObject obj in objects)

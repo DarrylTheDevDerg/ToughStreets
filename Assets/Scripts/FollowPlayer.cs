@@ -92,10 +92,12 @@ public class FollowPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        PlayerAttack pA = FindObjectOfType<PlayerAttack>();
         if (other.CompareTag("Player") && !other.GetComponent<TransparencyEffect>().getInvulnerable())
         {
             Enemy en = GetComponent<Enemy>();
             en.PlayerHarm();
+            pA.ComboReset();
         }
     }
 

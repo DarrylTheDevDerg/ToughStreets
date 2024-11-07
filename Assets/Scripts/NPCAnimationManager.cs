@@ -14,21 +14,15 @@ public class NPCAnimationManager : MonoBehaviour
     public bool giveItem;
     public GameObject[] items;
 
-    public bool alreadyInteracted;
-    public Animator an;
-    public TypewriterEffect te;
-    public PlayerMovement pM;
-
-    public PlayerAttack pA;
+    private bool alreadyInteracted;
+    private Animator an;
+    private TypewriterEffect te;
 
     // Start is called before the first frame update
     void Start()
     {
         an = GetComponent<Animator>();
         te = FindObjectOfType<TypewriterEffect>();
-        pM = FindObjectOfType<PlayerMovement>();
-
-        pA = FindObjectOfType<PlayerAttack>();
 
         an.SetLayerWeight(npcType, 1f);
 
@@ -39,12 +33,6 @@ public class NPCAnimationManager : MonoBehaviour
                 an.SetLayerWeight(i, 0f);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void GiveItems()
@@ -69,6 +57,7 @@ public class NPCAnimationManager : MonoBehaviour
     {
         if (!alreadyInteracted)
         {
+
             an.SetBool(interactTrigger, true);
             if (giveItem)
             {
@@ -82,6 +71,7 @@ public class NPCAnimationManager : MonoBehaviour
         }
         else
         {
+
             LookAtPlayer();
             an.SetBool(interactTrigger, true);
             te.StartTyping();
@@ -102,4 +92,20 @@ public class NPCAnimationManager : MonoBehaviour
         // Smoothly rotate towards the player over time
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
+
+    public bool InteractCheck()
+    {
+        return alreadyInteracted;
+    }
+
+    public Animator GrantAnimAccess()
+    {
+        return an;
+    }
+
+    public TypewriterEffect GrantTEAccess()
+    {
+        return te;
+    }
+
 }

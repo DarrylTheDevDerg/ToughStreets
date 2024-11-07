@@ -8,6 +8,7 @@ public class BossDisplay : MonoBehaviour
     public TextMeshProUGUI bossHp;
     public TextMeshProUGUI bossName;
     public GameObject bossUiDisplay;
+    public bool checkUpdate;
 
     private Boss bossEn;
     private Enemy en;
@@ -19,27 +20,31 @@ public class BossDisplay : MonoBehaviour
 
         if (bossEn != null)
         {
-            bossUiDisplay.SetActive(true);
-            en = bossEn.GetComponent<Enemy>();
-        }
-
-        if (bossHp != null && bossUiDisplay)
-        {
-            bossName.text = bossEn.name;
+            ActivateUIRelatedElements();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (bossEn == null && checkUpdate)
+        {
+            bossEn = FindObjectOfType<Boss>();
+        }
+
         if (bossEn != null)
         {
+            if (!bossUiDisplay.activeSelf)
+            {
+                ActivateUIRelatedElements();
+            }
+            
             SetHPText();
-        }
-        
-        if (en.enemyHP <= 0)
-        {
-            bossUiDisplay.SetActive(false);
+
+            if (en.enemyHP <= 0)
+            {
+                bossUiDisplay.SetActive(false);
+            }
         }
     }
 
@@ -48,6 +53,17 @@ public class BossDisplay : MonoBehaviour
         if (bossHp != null && bossUiDisplay)
         {
             bossHp.text = ((int)en.enemyHP).ToString();
+        }
+    }
+
+    public void ActivateUIRelatedElements()
+    {
+        bossUiDisplay.SetActive(true);
+        en = bossEn.GetComponent<Enemy>();
+
+        if (bossUiDisplay)
+        {
+            bossName.text = bossEn.name;
         }
     }
 }

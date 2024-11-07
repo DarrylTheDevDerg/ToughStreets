@@ -892,6 +892,7 @@ MonoBehaviour:
     is currently living a quiet, peaceful life.
   interacting: 0
   inactiveAfterUse: 0
+  activeStart: 1
 --- !u!114 &1903181763
 MonoBehaviour:
   m_ObjectHideFlags: 0

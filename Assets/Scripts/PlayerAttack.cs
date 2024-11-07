@@ -12,21 +12,21 @@ public class PlayerAttack : MonoBehaviour
     public GameObject comboUI;
 
     private Animator animator; // Tiempo del último ataque
-    private int comboStep;        // Paso actual del combo
+    private int comboStep, rumbleDmg;        // Paso actual del combo
     private BlinkOnDamage boD;
-    private bool attacking;
-    private VariableTextModify vtm;
+    private bool attacking, powerBar, rumbleMode;
     private TransparencyEffect tE;
-    private float currentTime, currentDamage, lastAttackTime;
+    private float currentTime, currentDamage, powerBarLife;
+    private PlayerStats pS;
 
     // Start is called before the first frame update
     void Awake()
     {
         animator = GetComponent<Animator>();
         boD = GetComponent<BlinkOnDamage>();
-        vtm = FindObjectOfType<VariableTextModify>();
 
         tE = GetComponent<TransparencyEffect>();
+        pS = GetComponent<PlayerStats>();
 
         currentDamage = damageAmount;
         comboStep = 0;
@@ -35,24 +35,51 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime = Time.time;
+        if (pS.healthPoints <= 25)
+        {
+            rumbleMode = true;
+        }
+        else
+        {
+            rumbleMode = false;
+        }
 
         if (comboAmount > 1)
         {
             comboUI.SetActive(true);
             comboText.text = comboAmount.ToString();
-            vtm.enabled = true;
+            currentTime += Time.deltaTime;
         }
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
             HandleCombo();
+        }
+
+        if (powerBar)
+        {
+            powerBarLife += Time.deltaTime;
+
+            if (powerBarLife > 10)
+            {
+                powerBar = false;
+            }
+        }
+
+        if (rumbleMode)
+        {
+            rumbleDmg = 2;
+        }
+        else
+        {
+            rumbleDmg = 0;
         }
     }
 
     private void HandleCombo()
     {
         // Si ha pasado suficiente tiempo desde el último ataque, reinicia el combo
-        if (lastAttackTime > comboDelay)
+        if (currentTime > comboDelay)
         {
             ComboReset();
         }
@@ -66,7 +93,15 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", false);
                 attacking = true;
-                currentDamage = damageAmount;
+                if (powerBar)
+                {
+                    currentDamage = (damageAmount * 1.5f) + rumbleDmg;
+                }
+                else
+                {
+                    currentDamage = damageAmount + rumbleDmg;
+                }
+                
                 break;
             case 1:
                 // Realiza el segundo ataque del combo
@@ -74,7 +109,14 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", true);
                 animator.SetBool("Combo3", false);
                 attacking = true;
-                currentDamage = currentDamage * 1.05f;
+                if (powerBar)
+                {
+                    currentDamage = ((damageAmount * 1.5f) * 1.05f) + rumbleDmg;
+                }
+                else
+                {
+                    currentDamage = (damageAmount * 1.05f) + rumbleDmg;
+                }
                 break;
             case 2:
                 // Realiza el tercer ataque del combo
@@ -82,13 +124,20 @@ public class PlayerAttack : MonoBehaviour
                 animator.SetBool("Combo2", false);
                 animator.SetBool("Combo3", true);
                 attacking = true;
-                currentDamage = currentDamage * 1.12f;
+                if (powerBar)
+                {
+                    currentDamage = ((damageAmount * 1.5f) * 1.12f) + rumbleDmg;
+                }
+                else
+                {
+                    currentDamage = (damageAmount * 1.12f) + rumbleDmg;
+                }
                 break;
         }
 
         // Actualiza el paso del combo y el tiempo del último ataque
         comboStep = (comboStep + 1) % 3; // Cambia al siguiente ataque en el combo (0, 1, 2, 0, 1, 2, ...)
-        lastAttackTime = currentTime;
+        currentTime = 0;
     }
 
     private void ResetComboBools()
@@ -99,7 +148,6 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("Combo3", false);
 
         attacking = false;
-        vtm.enabled= false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -107,6 +155,13 @@ public class PlayerAttack : MonoBehaviour
         if (other.transform.CompareTag(enemyTag) && attacking && !other.GetComponent<FollowPlayer>().attacking)
         {
             other.gameObject.GetComponent<Enemy>().TakeDamage(currentDamage);
+            other.gameObject.GetComponent<BlinkOnDamage>().TriggerBlink();
+            comboAmount++;
+        }
+
+        if (other.transform.CompareTag(crateTag) && attacking)
+        {
+            other.gameObject.GetComponent<Crate>().TakeDamage(currentDamage);
             other.gameObject.GetComponent<BlinkOnDamage>().TriggerBlink();
             comboAmount++;
         }
@@ -118,7 +173,7 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.SetTrigger(hurtAnimName);
             boD.TriggerBlink();
-            comboAmount = 0;
+            ComboReset();
         }
     }
 
@@ -139,11 +194,20 @@ public class PlayerAttack : MonoBehaviour
     {
         comboStep = 0;
         comboAmount = 0;
-        lastAttackTime = 0;
+        currentTime = 0;
         comboUI.SetActive(false);
 
         ResetComboBools();
         attacking = false;
-        vtm.enabled = false;
+    }
+
+    public void CrunchyBar()
+    {
+        powerBar = true;
+    }
+
+    public bool GetBar()
+    {
+        return powerBar;
     }
 }

@@ -163,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomDrop:
   - {fileID: 6504624084166012303, guid: a05667c2f1361434d9e68885df62a953, type: 3}
+  - {fileID: 3906126349959881729, guid: 4fc4fcebf1bd12f4a8532f00156f1e80, type: 3}
   amount: 1
 --- !u!114 &3405717910413020230
 MonoBehaviour:

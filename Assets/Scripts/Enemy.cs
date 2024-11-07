@@ -88,6 +88,7 @@ public class Enemy : MonoBehaviour
         if (collision.transform.CompareTag("Player") && !tE.getInvulnerable())
         {
             PlayerHarm();
+            pA.ComboReset();
         }
     }
 }

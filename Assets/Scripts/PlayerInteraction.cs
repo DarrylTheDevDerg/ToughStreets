@@ -8,19 +8,19 @@ public class PlayerInteraction : MonoBehaviour
     public LayerMask rayMask;
     public string npcTag, interactTrigger, crateTag;
 
-    private NPCAnimationManager npc;
     private Animator an;
+    private TypewriterEffect te;
 
     // Start is called before the first frame update
     void Start()
     {
-        npc = FindObjectOfType<NPCAnimationManager>();
         an = GetComponent<Animator>();
+        te = FindObjectOfType<TypewriterEffect>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(keyCode) && !npc.te.interacting) // Trigger on space key press
+        if (Input.GetKeyDown(keyCode) && !te.interacting) // Trigger on space key press
         {
             PerformRaycast();
         }
@@ -33,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour
             an.SetFloat("Walk", 0);
         }
 
-        if (!npc.te.interacting)
+        if (te.interacting)
         {
             an.SetTrigger(interactTrigger);
         }
@@ -88,13 +88,24 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (hit.collider.CompareTag(npcTag))
         {
-            InteractWith();
-            npc.InteractWithPlayer();
+            NPCAnimationManager npc = FindObjectOfType<NPCAnimationManager>();
+
+            if (npc != null)
+            {
+                InteractWith();
+                npc.InteractWithPlayer();
+            }
         }
-        else if (hit.collider.CompareTag(crateTag))
+
+        if (hit.collider.CompareTag(crateTag))
         {
-            InteractWith();
-            hit.collider.GetComponent<Crate>().crateHP = 0;
+            Crate crate = FindObjectOfType<Crate>();
+
+            if (crate != null)
+            {
+                InteractWith();
+                crate.crateHP = 0;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3193475838285313988}
   - component: {fileID: 8628081872886920965}
   - component: {fileID: 5032995989565384661}
+  - component: {fileID: -6066891610954256765}
   m_Layer: 0
   m_Name: Level End
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3045677438788985838}
+  - {fileID: 4798545816734366055}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5925017601499624833
@@ -45,7 +46,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1981341158218216360}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 0.4
+  simulationSpeed: 10.92
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -119,7 +120,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6.46
+      scalar: 8.38
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -172,7 +173,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.31
+      scalar: 0.16
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4855,7 +4856,7 @@ CapsuleCollider:
   m_Radius: 1.0935798
   m_Height: 2.528431
   m_Direction: 1
-  m_Center: {x: 0.13307929, y: 0.9416404, z: -0.019300938}
+  m_Center: {x: 0, y: 0.9416404, z: -0.019300938}
 --- !u!114 &5032995989565384661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4884,8 +4885,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 9137610454565743305, guid: 8011ce27c7039ff4888d1d99ed88cd18,
-          type: 3}
+      - m_Target: {fileID: 2697335872235936838}
         m_TargetAssemblyTypeName: PlayerPrefsManager, Assembly-CSharp
         m_MethodName: SaveAll
         m_Mode: 1
@@ -4898,7 +4898,29 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   playerTag: Player
---- !u!1001 &3707091850508692486
+--- !u!114 &-6066891610954256765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981341158218216360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d2a21081228fe45a04e513f4cda5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefsList:
+  - key: Current Level
+    value: 0
+    prefType: 0
+  - key: Game Finished
+    value: 0
+    prefType: 0
+  - key: Score
+    value: 0
+    prefType: 0
+--- !u!1001 &6602713443084793487
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4966,9 +4988,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8011ce27c7039ff4888d1d99ed88cd18, type: 3}
---- !u!4 &3045677438788985838 stripped
+--- !u!114 &2697335872235936838 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9137610454565743305, guid: 8011ce27c7039ff4888d1d99ed88cd18,
+    type: 3}
+  m_PrefabInstance: {fileID: 6602713443084793487}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d2a21081228fe45a04e513f4cda5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &4798545816734366055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1816735276590993384, guid: 8011ce27c7039ff4888d1d99ed88cd18,
     type: 3}
-  m_PrefabInstance: {fileID: 3707091850508692486}
+  m_PrefabInstance: {fileID: 6602713443084793487}
   m_PrefabAsset: {fileID: 0}

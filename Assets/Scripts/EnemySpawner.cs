@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         eC = FindObjectOfType<EnemyCount>();
+        CalculateSpawnerSize();
     }
 
     private void Update()

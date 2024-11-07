@@ -7,39 +7,44 @@ public class TypewriterEffect : MonoBehaviour
     public TextMeshProUGUI textMeshPro;   // Reference to the TextMeshProUGUI component
     public float typingSpeed = 0.05f;     // Time between each character being revealed
     public string[] dialogueStrings;      // Array of strings to display
-    public bool interacting, inactiveAfterUse;
+    public bool interacting, inactiveAfterUse, activeStart;
     private int currentStringIndex = 0;   // Tracks which string we're on
 
     private bool isTyping = false;        // Are we currently typing out a string?
     private bool skipTyping = false;      // Should we skip the typing animation?
     private bool textFullyDisplayed = false; // Is the current text fully displayed?
+
     private NPCAnimationManager npc;
     private TransparencyEffect tE;
+    private PlayerMovement pM;
+    private PlayerAttack pA;
 
     void Start()
     {
         npc = FindObjectOfType<NPCAnimationManager>();
         tE = FindObjectOfType<TransparencyEffect>();
 
-        // Start with the first string
-        if (npc != null)
-        {
-            dialogueStrings = npc.firstMessage;
-        }
-        else if (npc == null)
+        pM = FindObjectOfType<PlayerMovement>();
+        pA = FindObjectOfType<PlayerAttack>();
+
+        if (activeStart)
         {
             StartTyping();
         }
-
     }
 
     void Update()
     {
         if (npc != null)
         {
-            if (npc.alreadyInteracted && !interacting)
+            if (!npc.InteractCheck() && !interacting)
             {
-                dialogueStrings = npc.secondMessage;
+                DialogueManagement(npc.firstMessage);
+            }
+
+            if (npc.InteractCheck() && !interacting)
+            {
+                DialogueManagement(npc.secondMessage);
             }
         }
 
@@ -105,9 +110,9 @@ public class TypewriterEffect : MonoBehaviour
 
             if (npc != null)
             {
-                npc.pM.enabled = true;
-                npc.pA.enabled = true;
-                npc.an.SetBool(npc.interactTrigger, false);
+                pM.enabled = true;
+                pA.enabled = true;
+                npc.GrantAnimAccess().SetBool(npc.interactTrigger, false);
             }
         }
     }
@@ -127,10 +132,15 @@ public class TypewriterEffect : MonoBehaviour
 
         if (npc != null && tE != null)
         {
-            npc.pM.enabled = false;
-            npc.pA.enabled = false;
+            pM.enabled = false;
+            pA.enabled = false;
 
             tE.SetInvul();
         }
+    }
+
+    public void DialogueManagement(string[] message)
+    {
+        dialogueStrings = message;
     }
 }
